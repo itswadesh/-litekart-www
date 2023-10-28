@@ -2,6 +2,7 @@ FROM node:18
 
 WORKDIR /usr/src/app
 
+RUN npm i -g pnpm
 # Copy root package.json and lockfile
 COPY package.json ./
 # COPY pnpm-lock.yaml ./
@@ -9,12 +10,11 @@ COPY package.json ./
 # Copy the docs package.json
 # COPY apps/web/package.json ./apps/web/package.json
 
-# RUN npm i -g pnpm
-RUN yarn install
+RUN pnpm install
 
 # Copy app source
-COPY ../ .
+COPY . .
 
 EXPOSE 3000
 
-CMD [ "npm", "start" ]
+CMD [ "pnpm", "start" ]
