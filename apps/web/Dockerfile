@@ -11,6 +11,7 @@ RUN apt-get install -yq tzdata && \
 
 WORKDIR /usr/app
 COPY . .
+RUN pnpm i
 RUN pnpm run build
 ##### Stage 2 - Production
 ENV PUPPETEER_SKIP_DOWNLOAD="true"
