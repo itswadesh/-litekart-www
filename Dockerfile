@@ -5,8 +5,7 @@ RUN apk add --no-cache libc6-compat
 RUN apk update
 # Set working directory
 WORKDIR /app
-RUN npm i -g turbo
-RUN npm i -g pnpm
+RUN yarn global add turbo
 COPY . .
 RUN turbo prune web --docker
 
@@ -19,14 +18,14 @@ WORKDIR /app
 # First install the dependencies (as they change less often)
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN pnpm install
+COPY --from=builder /app/out/yarn.lock ./yarn.lock
+RUN yarn install
 
 # Build the project
 COPY --from=builder /app/out/full/ .
 # COPY turbo.json turbo.json
 
-RUN pnpm turbo run build --filter=web
+RUN yarn turbo run build --filter=web
 
 FROM base AS runner
 WORKDIR /app
@@ -37,5 +36,5 @@ WORKDIR /app
 # USER nextjs
 COPY --from=installer /app/apps/web .
 
-RUN pnpm install
+RUN yarn install
 CMD npm start
