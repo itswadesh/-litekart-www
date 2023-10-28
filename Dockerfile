@@ -17,6 +17,7 @@ RUN pnpm install
 COPY . .
 
 WORKDIR /usr/src/app/apps/web
+RUN pnpm install
 
 EXPOSE 3000
 
