@@ -16,6 +16,8 @@ RUN pnpm install
 # Copy app source
 COPY . .
 
+RUN cd apps/web
+
 EXPOSE 3000
 
-CMD [ "npm", "run", "start:web" ]
+CMD [ "npm", "start" ]
