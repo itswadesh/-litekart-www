@@ -12,7 +12,7 @@ RUN npm i -g pnpm
 COPY apps/web/package.json ./apps/web/package.json
 
 RUN pnpm i --force
-
+RUN pnpm build:web
 # Copy app source
 COPY . .
 
