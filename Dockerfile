@@ -17,7 +17,7 @@ RUN pnpm install
 COPY . .
 
 RUN cd apps/web
-
+RUN ls
 EXPOSE 3000
 
 CMD [ "npm", "start" ]
