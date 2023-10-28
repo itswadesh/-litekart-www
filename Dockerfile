@@ -18,4 +18,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD [ "pnpm", "start:web" ]
+CMD [ "npm", "run", "start:web" ]
