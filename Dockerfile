@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:21-alpine AS base
 
 FROM base AS builder
 RUN apk add --no-cache libc6-compat
@@ -6,7 +6,6 @@ RUN apk update
 # Set working directory
 WORKDIR /app
 RUN npm i -g turbo
-RUN npm i -g pnpm
 COPY . .
 RUN turbo prune web --docker
 
@@ -20,7 +19,6 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
 RUN pnpm install
 
 # Build the project
@@ -33,9 +31,10 @@ FROM base AS runner
 WORKDIR /app
 
 # Don't run production as root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-USER nextjs
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+# USER nextjs
 COPY --from=installer /app/apps/web .
 
+RUN pnpm install
 CMD npm start
