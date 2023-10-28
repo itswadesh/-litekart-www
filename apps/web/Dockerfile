@@ -9,12 +9,12 @@ COPY package.json ./
 # Copy the docs package.json
 # COPY apps/web/package.json ./apps/web/package.json
 
-RUN npm i -g pnpm
-RUN pnpm install
+# RUN npm i -g pnpm
+RUN yarn install
 
 # Copy app source
 COPY . .
 
 EXPOSE 3000
 
-CMD [ "pnpm", "start" ]
+CMD [ "npm", "start" ]
