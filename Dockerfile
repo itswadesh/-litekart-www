@@ -6,10 +6,12 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 
+RUN npm i -g pnpm
+
 # Copy the docs package.json
 COPY apps/web/package.json ./apps/web/package.json
 
-RUN npm install
+RUN pnpm install
 
 # Copy app source
 COPY . .
