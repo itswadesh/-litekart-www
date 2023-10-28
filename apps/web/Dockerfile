@@ -13,7 +13,7 @@ COPY package.json ./
 RUN yarn install
 
 # Copy app source
-COPY . .
+COPY ../ .
 
 EXPOSE 3000
 
