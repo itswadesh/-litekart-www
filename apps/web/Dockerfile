@@ -9,6 +9,7 @@ COPY package.json ./
 # Copy the docs package.json
 # COPY apps/web/package.json ./apps/web/package.json
 
+RUN npm i -g pnpm
 RUN pnpm install
 
 # Copy app source
