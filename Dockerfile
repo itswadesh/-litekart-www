@@ -10,19 +10,9 @@ RUN apt-get install -yq tzdata && \
     dpkg-reconfigure -f noninteractive tzdata
 
 WORKDIR /usr/app
-COPY package.json ./
-COPY .npmrc ./
-ENV PUPPETEER_SKIP_DOWNLOAD="true"
-RUN pnpm install --force
-RUN cp -R node_modules prod_node_modules
 COPY . .
 RUN pnpm run build
 ##### Stage 2 - Production
-FROM builder as production
-WORKDIR /usr/app
-COPY --from=builder /usr/app/prod_node_modules ./node_modules
-COPY --from=builder /usr/app/package*.json ./
 ENV PUPPETEER_SKIP_DOWNLOAD="true"
 ENV NODE_ENV=production
-COPY --from=builder /usr/app/.svelte-kit ./.svelte-kit
 CMD [ "pnpm", "start" ]
